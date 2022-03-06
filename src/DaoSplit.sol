@@ -22,14 +22,13 @@ contract DaoSplit {
         MinContribution = minContribution;
     }
 
-    function RefundContribution(address recipient) external SplitRefund {
+    function RefundContribution(address recipient) public {
+        require(isRefund(), "no refunds yet");
         IERC20(TargetToken).transfer(recipient, Contributions[recipient]);
     }
 
-    function RefundReward(address recipient, address reward)
-        external
-        SplitRefund
-    {
+    function RefundReward(address recipient, address reward) external {
+        require(isRefund(), "no refunds");
         address id = address(
             bytes20(keccak256(abi.encodePacked(recipient, reward)))
         );
@@ -40,8 +39,8 @@ contract DaoSplit {
 
     function ClaimReward(address recipient, address[] calldata rewards)
         external
-        SplitComplete
     {
+        require(isComplete(), "isnt complete");
         uint256 contribution = Contributions[recipient];
 
         // guard against reentry
@@ -54,8 +53,8 @@ contract DaoSplit {
         }
     }
 
-    function Contribute(address from, uint256 amount) external SplitActive {
-        IERC20(TargetToken).approve(address(this), amount);
+    function Contribute(address from, uint256 amount) external {
+        require(isActive(), "isnt active");
         IERC20(TargetToken).transferFrom(from, address(this), amount);
         Contributions[from] += amount;
         contributed += amount;
@@ -65,8 +64,8 @@ contract DaoSplit {
         address from,
         address tokenAddress,
         uint256 amount
-    ) external SplitActive {
-        IERC20(tokenAddress).approve(address(this), amount);
+    ) external {
+        require(isActive(), "isnt active");
         IERC20(tokenAddress).transferFrom(from, address(this), amount);
         Rewards[tokenAddress] += amount;
     }
@@ -79,18 +78,23 @@ contract DaoSplit {
         return (contribution * Rewards[token]) / contributed;
     }
 
-    modifier SplitActive() {
-        require(block.number < Expiry);
-        _;
+    function isComplete() public view returns (bool) {
+        return block.number > Expiry && contributed >= MinContribution;
     }
 
-    modifier SplitComplete() {
-        require(block.number > Expiry && contributed >= MinContribution);
-        _;
+    function isActive() public view returns (bool) {
+        return block.number < Expiry;
     }
 
-    modifier SplitRefund() {
-        require(block.number > Expiry && contributed < MinContribution);
-        _;
+    function isRefund() public view returns (bool) {
+        return block.number > Expiry && contributed < MinContribution;
+    }
+
+    function contributedOf(address contributor)
+        external
+        view
+        returns (uint256)
+    {
+        return Contributions[contributor];
     }
 }
