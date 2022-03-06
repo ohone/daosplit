@@ -54,6 +54,7 @@ contract DaoSplit {
     }
 
     function Contribute(address from, uint256 amount) external {
+        require(msg.sender == from);
         require(isActive(), "isnt active");
         IERC20(TargetToken).transferFrom(from, address(this), amount);
         Contributions[from] += amount;
