@@ -1,0 +1,152 @@
+{
+  "_format": "ethers-rs-sol-cache-1",
+  "files": {
+    "/Users/eoghan/source/daosplit/src/DaoSplit.sol": {
+      "lastModificationDate": 1646583425322,
+      "contentHash": "eaec5a50949e244a332902022bcea8b1",
+      "sourceName": "src/DaoSplit.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      ],
+      "versionPragmas": [
+        "0.8.12"
+      ],
+      "artifacts": [
+        "DaoSplit"
+      ]
+    },
+    "/Users/eoghan/source/daosplit/src/DaoSplitFactory.sol": {
+      "lastModificationDate": 1646583594431,
+      "contentHash": "1a6979b695c94bc220de0948f1724605",
+      "sourceName": "src/DaoSplitFactory.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "./DaoSplit.sol"
+      ],
+      "versionPragmas": [
+        "0.8.12"
+      ],
+      "artifacts": [
+        "DaoSplitFactory"
+      ]
+    },
+    "/Users/eoghan/source/daosplit/src/test/DaoSplit.t.sol": {
+      "lastModificationDate": 1646584923613,
+      "contentHash": "7685b5d8fd40dd06c8e8e93ca6b2c97d",
+      "sourceName": "src/test/DaoSplit.t.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [
+        "ds-test/test.sol",
+        "../DaoSplit.sol"
+      ],
+      "versionPragmas": [
+        "0.8.12"
+      ],
+      "artifacts": [
+        "DaoSplitTest"
+      ]
+    },
+    "/Users/eoghan/source/daosplit/src/test/DaoSplitFactory.t.sol": {
+      "lastModificationDate": 1646584982576,
+      "contentHash": "7685b5d8fd40dd06c8e8e93ca6b2c97d",
+      "sourceName": "src/test/DaoSplitFactory.t.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [
+        "ds-test/test.sol",
+        "../DaoSplit.sol"
+      ],
+      "versionPragmas": [
+        "0.8.12"
+      ],
+      "artifacts": [
+        "DaoSplitTest"
+      ]
+    }
+  }
+}
