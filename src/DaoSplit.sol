@@ -80,15 +80,15 @@ contract DaoSplit {
     }
 
     function isComplete() public view returns (bool) {
-        return block.number > Expiry && contributed >= MinContribution;
+        return block.timestamp > Expiry && contributed >= MinContribution;
     }
 
     function isActive() public view returns (bool) {
-        return block.number < Expiry;
+        return block.timestamp <= Expiry;
     }
 
     function isRefund() public view returns (bool) {
-        return block.number > Expiry && contributed < MinContribution;
+        return block.timestamp > Expiry && contributed < MinContribution;
     }
 
     function contributedOf(address contributor)
