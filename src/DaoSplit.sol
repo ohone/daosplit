@@ -23,7 +23,7 @@ contract DaoSplit {
     }
 
     function RefundContribution(address recipient) public {
-        require(isRefund(), "no refunds yet");
+        require(isRefund(), "no refunds");
         IERC20(TargetToken).transfer(recipient, Contributions[recipient]);
     }
 
@@ -48,6 +48,7 @@ contract DaoSplit {
         Contributions[recipient] = 0;
 
         for (uint256 index = 0; index < rewards.length; index++) {
+            require(Rewards[rewards[index]] != 0, "no rewards for token");
             uint256 amount = rewardAmount(contribution, rewards[index]);
             IERC20(rewards[index]).transfer(recipient, amount);
         }
