@@ -2,8 +2,8 @@
   "_format": "ethers-rs-sol-cache-1",
   "files": {
     "/Users/eoghan/source/daosplit/src/DaoSplit.sol": {
-      "lastModificationDate": 1646583425322,
-      "contentHash": "eaec5a50949e244a332902022bcea8b1",
+      "lastModificationDate": 1646691336590,
+      "contentHash": "f271c37fa34fd69b97ac8d0c448b596f",
       "sourceName": "src/DaoSplit.sol",
       "solcConfig": {
         "settings": {
@@ -38,8 +38,8 @@
       ]
     },
     "/Users/eoghan/source/daosplit/src/DaoSplitFactory.sol": {
-      "lastModificationDate": 1646583594431,
-      "contentHash": "1a6979b695c94bc220de0948f1724605",
+      "lastModificationDate": 1646585194911,
+      "contentHash": "9da2c809142cb5e05de9f67265b77a05",
       "sourceName": "src/DaoSplitFactory.sol",
       "solcConfig": {
         "settings": {
@@ -64,7 +64,6 @@
         }
       },
       "imports": [
-        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
         "./DaoSplit.sol"
       ],
       "versionPragmas": [
@@ -75,8 +74,8 @@
       ]
     },
     "/Users/eoghan/source/daosplit/src/test/DaoSplit.t.sol": {
-      "lastModificationDate": 1646584923613,
-      "contentHash": "7685b5d8fd40dd06c8e8e93ca6b2c97d",
+      "lastModificationDate": 1646768000856,
+      "contentHash": "a6d9f3d3d6008d174642e0443d063e02",
       "sourceName": "src/test/DaoSplit.t.sol",
       "solcConfig": {
         "settings": {
@@ -102,7 +101,9 @@
       },
       "imports": [
         "ds-test/test.sol",
-        "../DaoSplit.sol"
+        "../DaoSplit.sol",
+        "./Hevm.sol",
+        "./TestToken.sol"
       ],
       "versionPragmas": [
         "0.8.12"
@@ -112,8 +113,8 @@
       ]
     },
     "/Users/eoghan/source/daosplit/src/test/DaoSplitFactory.t.sol": {
-      "lastModificationDate": 1646584982576,
-      "contentHash": "7685b5d8fd40dd06c8e8e93ca6b2c97d",
+      "lastModificationDate": 1646585461198,
+      "contentHash": "de7a972fe48f6270658e4540d4e2c84f",
       "sourceName": "src/test/DaoSplitFactory.t.sol",
       "solcConfig": {
         "settings": {
@@ -139,13 +140,83 @@
       },
       "imports": [
         "ds-test/test.sol",
-        "../DaoSplit.sol"
+        "../DaoSplitFactory.sol"
       ],
       "versionPragmas": [
         "0.8.12"
       ],
       "artifacts": [
-        "DaoSplitTest"
+        "DaoSplitFactoryTest"
+      ]
+    },
+    "/Users/eoghan/source/daosplit/src/test/Hevm.sol": {
+      "lastModificationDate": 1646587413977,
+      "contentHash": "02cc384521164257839043617efda6de",
+      "sourceName": "src/test/Hevm.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.12"
+      ],
+      "artifacts": [
+        "Hevm"
+      ]
+    },
+    "/Users/eoghan/source/daosplit/src/test/TestToken.sol": {
+      "lastModificationDate": 1646587420912,
+      "contentHash": "8b1cb6f161f365d6c4a2d0e8a8375669",
+      "sourceName": "src/test/TestToken.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      ],
+      "versionPragmas": [
+        "0.8.12"
+      ],
+      "artifacts": [
+        "TestToken"
       ]
     }
   }
