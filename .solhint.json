@@ -1,0 +1,5 @@
+{
+  "extends": "solhint:recommended",
+  "func-order": "error",
+  "ordering": "error"
+}

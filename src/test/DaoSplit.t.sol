@@ -24,7 +24,7 @@ contract DaoSplitTest is DSTest {
         owner = address(this);
     }
 
-    function testCanContributeTargetToken() public {
+    function test_CanContributeTargetToken() public {
         address user = address(1);
         uint256 amount = 1337;
 
@@ -42,7 +42,22 @@ contract DaoSplitTest is DSTest {
         assertEq(testContract.contributedOf(user), amount);
     }
 
-    function testMinimumNotMet_CanRefundContribution(
+    function test_ContributeNonTargetToken_reverts() public {
+        address user = address(1);
+        uint256 amount = 1337;
+
+        vm.prank(owner);
+        TestToken newToken = new TestToken();
+        newToken.Mint(user, amount);
+
+        vm.startPrank(user);
+        newToken.approve(address(testContract), amount);
+
+        vm.expectRevert(bytes("ERC20: insufficient allowance"));
+        testContract.Contribute(user, amount);
+    }
+
+    function test_SplitExpires_CanRefundContribution(
         address user,
         uint256 amount
     ) public {
@@ -65,7 +80,7 @@ contract DaoSplitTest is DSTest {
         assertEq(targetToken.balanceOf(user), amount);
     }
 
-    function testMinimumNotMet_CanRefundRewards(
+    function test_SplitExpires_CanRefundRewards(
         address user,
         uint256 amount,
         uint256[] calldata rewards
@@ -105,7 +120,7 @@ contract DaoSplitTest is DSTest {
         vm.stopPrank();
     }
 
-    function testMinimumMet_RefundContribution_Reverts() public {
+    function test_SplitComplete_RefundContribution_Reverts() public {
         // fuzz filter
         address user = address(1337);
         uint256 amount = 100;
@@ -133,7 +148,7 @@ contract DaoSplitTest is DSTest {
         vm.stopPrank();
     }
 
-    function testMinimumMet_ClaimsRewards() public {
+    function test_SplitComplete_ClaimsRewards() public {
         address user = address(1);
         uint256 amount = 1337;
 
@@ -260,7 +275,7 @@ contract DaoSplitTest is DSTest {
         }
     }
 
-    function testMinimumMet_ClaimsNonExistingReward_Reverted() public {
+    function test_SplitComplete_ClaimsNonExistingReward_Reverted() public {
         address user = address(1);
         uint256 amount = 1000;
         // populate minimum to ensure completion
