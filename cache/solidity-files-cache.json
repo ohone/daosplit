@@ -2,8 +2,8 @@
   "_format": "ethers-rs-sol-cache-1",
   "files": {
     "/Users/eoghan/source/daosplit/src/DaoSplit.sol": {
-      "lastModificationDate": 1647727781705,
-      "contentHash": "763829b9db809bcc2509fcca6d0362a7",
+      "lastModificationDate": 1647771910688,
+      "contentHash": "8f75a4692f3c29f1a046ba3bf579d0de",
       "sourceName": "src/DaoSplit.sol",
       "solcConfig": {
         "settings": {
@@ -74,8 +74,8 @@
       ]
     },
     "/Users/eoghan/source/daosplit/src/test/DaoSplit.t.sol": {
-      "lastModificationDate": 1647711194491,
-      "contentHash": "ae1d6c4a2ae5a9cad03e1b3b674e1ff0",
+      "lastModificationDate": 1647759621455,
+      "contentHash": "4c2c4942bf4d55748d000f81a33ac6f8",
       "sourceName": "src/test/DaoSplit.t.sol",
       "solcConfig": {
         "settings": {
@@ -113,8 +113,8 @@
       ]
     },
     "/Users/eoghan/source/daosplit/src/test/DaoSplitFactory.t.sol": {
-      "lastModificationDate": 1647759451012,
-      "contentHash": "e0db12752946d85d6d4f960dc62f4b7f",
+      "lastModificationDate": 1647771814326,
+      "contentHash": "cc36e4c4b1607dfe3cab4c3c24e592f8",
       "sourceName": "src/test/DaoSplitFactory.t.sol",
       "solcConfig": {
         "settings": {
@@ -184,8 +184,8 @@
       ]
     },
     "/Users/eoghan/source/daosplit/src/test/TestToken.sol": {
-      "lastModificationDate": 1646587420912,
-      "contentHash": "8b1cb6f161f365d6c4a2d0e8a8375669",
+      "lastModificationDate": 1647759476816,
+      "contentHash": "6fdc065cdf3acc020eaff293cb37b31d",
       "sourceName": "src/test/TestToken.sol",
       "solcConfig": {
         "settings": {

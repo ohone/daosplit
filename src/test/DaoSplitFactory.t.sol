@@ -15,4 +15,20 @@ contract DaoSplitFactoryTest is DSTest {
         address splitAddress = factory.registerSplit(address(1), 100, 10);
         assertTrue(splitAddress != address(0));
     }
+
+    function test_createdSplit_WithSuppliedProperties() public {
+        address targetToken = address(1);
+        uint256 expiry = 100;
+        uint256 minContribution = 10;
+        address splitAddress = factory.registerSplit(
+            targetToken,
+            expiry,
+            minContribution
+        );
+        DaoSplit createdSplit = DaoSplit(splitAddress);
+
+        assertEq(uint256(expiry), createdSplit.expiry());
+        assertEq(targetToken, createdSplit.targetToken());
+        assertEq(minContribution, createdSplit.minContribution());
+    }
 }

@@ -1,5 +1,3 @@
 {
-  "extends": "solhint:recommended",
-  "func-order": "error",
-  "ordering": "error"
+  "extends": "solhint:default"
 }

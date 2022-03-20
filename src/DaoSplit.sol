@@ -42,8 +42,6 @@ contract DaoSplit {
     {
         require(isComplete(), "isnt complete");
         uint256 contribution = contributions[recipient];
-
-        // guard against reentry
         require(contribution > 0, "no contributions to claim");
         contributions[recipient] = 0;
 
