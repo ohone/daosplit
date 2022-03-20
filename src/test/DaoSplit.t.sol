@@ -29,11 +29,11 @@ contract DaoSplitTest is DSTest {
         uint256 amount = 1337;
 
         vm.prank(owner);
-        targetToken.Mint(user, amount);
+        targetToken.mint(user, amount);
 
         vm.startPrank(user);
         targetToken.approve(address(testContract), amount);
-        testContract.Contribute(user, amount);
+        testContract.contribute(user, amount);
         vm.stopPrank();
 
         // token ownership transferred to contract
@@ -48,13 +48,13 @@ contract DaoSplitTest is DSTest {
 
         vm.prank(owner);
         TestToken newToken = new TestToken();
-        newToken.Mint(user, amount);
+        newToken.mint(user, amount);
 
         vm.startPrank(user);
         newToken.approve(address(testContract), amount);
 
         vm.expectRevert(bytes("ERC20: insufficient allowance"));
-        testContract.Contribute(user, amount);
+        testContract.contribute(user, amount);
     }
 
     function test_SplitExpires_CanRefundContribution(
@@ -65,18 +65,18 @@ contract DaoSplitTest is DSTest {
         if (amount > minContribution) {
             return;
         }
-        targetToken.Mint(user, amount);
+        targetToken.mint(user, amount);
 
         vm.prank(user);
         targetToken.approve(address(testContract), amount);
 
-        testContract.Contribute(user, amount);
+        testContract.contribute(user, amount);
         assertEq(targetToken.balanceOf(user), 0);
         assertEq(testContract.contributedOf(user), amount);
 
         vm.warp(expiry + 1);
 
-        testContract.RefundContribution(user);
+        testContract.refundContribution(user);
         assertEq(targetToken.balanceOf(user), amount);
     }
 
@@ -89,12 +89,12 @@ contract DaoSplitTest is DSTest {
         if (amount > minContribution) {
             return;
         }
-        targetToken.Mint(user, amount);
+        targetToken.mint(user, amount);
 
         vm.prank(user);
         targetToken.approve(address(testContract), amount);
 
-        testContract.Contribute(user, amount);
+        testContract.contribute(user, amount);
         assertEq(targetToken.balanceOf(user), 0);
         assertEq(testContract.contributedOf(user), amount);
 
@@ -103,15 +103,15 @@ contract DaoSplitTest is DSTest {
         address[] memory rewardsAddresses = new address[](rewards.length);
         for (uint256 index = 0; index < rewards.length; index++) {
             TestToken token = new TestToken();
-            token.Mint(owner, rewards[index]);
+            token.mint(owner, rewards[index]);
             token.approve(address(testContract), rewards[index]);
-            testContract.AddReward(owner, address(token), rewards[index]);
+            testContract.addReward(owner, address(token), rewards[index]);
             rewardsAddresses[index] = address(token);
         }
 
         vm.warp(expiry + 1);
         for (uint256 index = 0; index < rewards.length; index++) {
-            testContract.RefundReward(owner, rewardsAddresses[index]);
+            testContract.refundReward(owner, rewardsAddresses[index]);
             assertEq(
                 TestToken(rewardsAddresses[index]).balanceOf(owner),
                 rewards[index]
@@ -129,12 +129,12 @@ contract DaoSplitTest is DSTest {
         contributeMinimum(owner, targetToken, testContract, minContribution);
 
         // transfer token allocation to user
-        targetToken.Mint(user, amount);
+        targetToken.mint(user, amount);
         vm.startPrank(user);
 
         // user contributes to daosplit
         targetToken.approve(address(testContract), amount);
-        testContract.Contribute(user, amount);
+        testContract.contribute(user, amount);
         assertEq(targetToken.balanceOf(user), 0);
         assertEq(testContract.contributedOf(user), amount);
 
@@ -143,7 +143,7 @@ contract DaoSplitTest is DSTest {
 
         // user attempts to get refund
         vm.expectRevert(bytes("no refunds"));
-        testContract.RefundContribution(user);
+        testContract.refundContribution(user);
 
         vm.stopPrank();
     }
@@ -157,11 +157,11 @@ contract DaoSplitTest is DSTest {
 
         // mint tokens to user
         vm.prank(owner);
-        targetToken.Mint(user, amount);
+        targetToken.mint(user, amount);
 
         vm.startPrank(user);
         targetToken.approve(address(testContract), amount);
-        testContract.Contribute(user, amount);
+        testContract.contribute(user, amount);
         assertEq(targetToken.balanceOf(user), 0);
         assertEq(testContract.contributedOf(user), amount);
         vm.stopPrank();
@@ -172,9 +172,9 @@ contract DaoSplitTest is DSTest {
         address[] memory rewardsAddresses = new address[](rewardsCount);
         for (uint256 index = 0; index < rewardsCount; index++) {
             TestToken token = new TestToken();
-            token.Mint(owner, 1337);
+            token.mint(owner, 1337);
             token.approve(address(testContract), 1337);
-            testContract.AddReward(owner, address(token), 1337);
+            testContract.addReward(owner, address(token), 1337);
             rewardsAddresses[index] = address(token);
         }
         vm.stopPrank();
@@ -182,7 +182,7 @@ contract DaoSplitTest is DSTest {
 
         // claim all rewards
         vm.prank(user);
-        testContract.ClaimReward(user, rewardsAddresses);
+        testContract.claimReward(user, rewardsAddresses);
 
         // assert rewards recieved
         for (uint256 index = 0; index < rewardsCount; index++) {
@@ -226,11 +226,11 @@ contract DaoSplitTest is DSTest {
 
             // mint tokens to user
             vm.prank(owner);
-            targetToken.Mint(users[index], fixedAmount);
+            targetToken.mint(users[index], fixedAmount);
             // contribute tokens on behalf of user
             vm.startPrank(users[index]);
             targetToken.approve(address(testContract), fixedAmount);
-            testContract.Contribute(users[index], fixedAmount);
+            testContract.contribute(users[index], fixedAmount);
             vm.stopPrank();
 
             totalContributed += fixedAmount;
@@ -246,9 +246,9 @@ contract DaoSplitTest is DSTest {
         for (uint256 index = 0; index < rewards.length; index++) {
             TestToken token = new TestToken();
             rewardsAddresses[index] = address(token);
-            token.Mint(owner, rewards[index]);
+            token.mint(owner, rewards[index]);
             token.approve(address(testContract), rewards[index]);
-            testContract.AddReward(owner, address(token), rewards[index]);
+            testContract.addReward(owner, address(token), rewards[index]);
         }
         vm.stopPrank();
 
@@ -258,7 +258,7 @@ contract DaoSplitTest is DSTest {
 
         for (uint256 index = 0; index < users.length; index++) {
             uint256 contribution = testContract.contributedOf(users[index]);
-            testContract.ClaimReward(users[index], rewardsAddresses);
+            testContract.claimReward(users[index], rewardsAddresses);
 
             for (
                 uint256 rewardIndex = 0;
@@ -282,11 +282,11 @@ contract DaoSplitTest is DSTest {
         contributeMinimum(owner, targetToken, testContract, minContribution);
 
         vm.prank(owner);
-        targetToken.Mint(user, amount);
+        targetToken.mint(user, amount);
 
         vm.startPrank(user);
         targetToken.approve(address(testContract), amount);
-        testContract.Contribute(user, amount);
+        testContract.contribute(user, amount);
         vm.stopPrank();
         assertEq(targetToken.balanceOf(user), 0);
         assertEq(testContract.contributedOf(user), amount);
@@ -295,9 +295,9 @@ contract DaoSplitTest is DSTest {
         vm.startPrank(owner);
         for (uint256 index = 0; index < 5; index++) {
             TestToken token = new TestToken();
-            token.Mint(owner, 200);
+            token.mint(owner, 200);
             token.approve(address(testContract), 200);
-            testContract.AddReward(owner, address(token), 200);
+            testContract.addReward(owner, address(token), 200);
         }
         vm.stopPrank();
 
@@ -308,7 +308,7 @@ contract DaoSplitTest is DSTest {
         rewardsAddresses[0] = address(1337);
         vm.startPrank(user);
         vm.expectRevert(bytes("no rewards for token"));
-        testContract.ClaimReward(user, rewardsAddresses);
+        testContract.claimReward(user, rewardsAddresses);
         vm.stopPrank();
     }
 
@@ -320,9 +320,9 @@ contract DaoSplitTest is DSTest {
     ) private returns (uint256) {
         vm.startPrank(tokenOwner);
         uint256 contributed = amount + 1;
-        token.Mint(tokenOwner, contributed);
+        token.mint(tokenOwner, contributed);
         token.approve(address(recipient), contributed);
-        recipient.Contribute(tokenOwner, contributed);
+        recipient.contribute(tokenOwner, contributed);
         vm.stopPrank();
         return contributed;
     }

@@ -5,14 +5,14 @@ import "ds-test/test.sol";
 import "../DaoSplitFactory.sol";
 
 contract DaoSplitFactoryTest is DSTest {
-    DaoSplitFactory factory;
+    DaoSplitFactory private factory;
 
     function setUp() public {
         factory = new DaoSplitFactory();
     }
 
-    function CreateSplit_ReturnsAddress() public {
-        address splitAddress = factory.RegisterSplit(address(1), 100, 10);
+    function test_createSplit_ReturnsAddress() public {
+        address splitAddress = factory.registerSplit(address(1), 100, 10);
         assertTrue(splitAddress != address(0));
     }
 }
