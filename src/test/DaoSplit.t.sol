@@ -24,7 +24,7 @@ contract DaoSplitTest is DSTest {
         owner = address(this);
     }
 
-    function test_CanContributeTargetToken() public {
+    function test_SplitActive_CanContributeTargetToken() public {
         address user = address(1);
         uint256 amount = 1337;
 
@@ -42,6 +42,19 @@ contract DaoSplitTest is DSTest {
         assertEq(testContract.contributedOf(user), amount);
     }
 
+    function test_SplitActive_CanContributeReward() public {
+        vm.startPrank(owner);
+        TestToken newToken = new TestToken();
+        uint256 newTokenAmount = uint256(200);
+        newToken.mint(owner, newTokenAmount);
+
+        newToken.approve(address(testContract), newTokenAmount);
+        testContract.addReward(owner, address(newToken), newTokenAmount);
+
+        assertEq(newToken.balanceOf(address(testContract)), newTokenAmount);
+        vm.stopPrank();
+    }
+
     function test_ContributeNonTargetToken_reverts() public {
         address user = address(1);
         uint256 amount = 1337;
@@ -57,14 +70,9 @@ contract DaoSplitTest is DSTest {
         testContract.contribute(user, amount);
     }
 
-    function test_SplitExpires_CanRefundContribution(
-        address user,
-        uint256 amount
-    ) public {
-        // fuzz filter
-        if (amount > minContribution) {
-            return;
-        }
+    function test_SplitExpires_RefundContribution() public {
+        address user = address(1);
+        uint256 amount = minContribution - 1;
         targetToken.mint(user, amount);
 
         vm.prank(user);
@@ -74,21 +82,17 @@ contract DaoSplitTest is DSTest {
         assertEq(targetToken.balanceOf(user), 0);
         assertEq(testContract.contributedOf(user), amount);
 
+        // warp to completion
         vm.warp(expiry + 1);
 
         testContract.refundContribution(user);
         assertEq(targetToken.balanceOf(user), amount);
     }
 
-    function test_SplitExpires_CanRefundRewards(
-        address user,
-        uint256 amount,
-        uint256[] calldata rewards
-    ) public {
-        // fuzz filter
-        if (amount > minContribution) {
-            return;
-        }
+    function test_SplitExpires_RefundRewards() public {
+        address user = address(1);
+        uint256 amount = uint256(1);
+
         targetToken.mint(user, amount);
 
         vm.prank(user);
@@ -99,29 +103,58 @@ contract DaoSplitTest is DSTest {
         assertEq(testContract.contributedOf(user), amount);
 
         // populate rewards
-        vm.startPrank(owner);
-        address[] memory rewardsAddresses = new address[](rewards.length);
-        for (uint256 index = 0; index < rewards.length; index++) {
-            TestToken token = new TestToken();
-            token.mint(owner, rewards[index]);
-            token.approve(address(testContract), rewards[index]);
-            testContract.addReward(owner, address(token), rewards[index]);
-            rewardsAddresses[index] = address(token);
-        }
+        ContributedReward[] memory rewards = new ContributedReward[](5);
+        populateRewardsRange(testContract, owner, rewards);
 
+        // warp to completion
         vm.warp(expiry + 1);
+
+        // assert each reward refunded
         for (uint256 index = 0; index < rewards.length; index++) {
-            testContract.refundReward(owner, rewardsAddresses[index]);
+            testContract.refundReward(owner, rewards[index].token);
             assertEq(
-                TestToken(rewardsAddresses[index]).balanceOf(owner),
-                rewards[index]
+                TestToken(rewards[index].token).balanceOf(owner),
+                rewards[index].amount
             );
         }
+
+        vm.stopPrank();
+    }
+
+    function test_SplitExpires_ClaimRewards_Reverts() public {
+        address user = address(1);
+        uint256 amount = 1;
+
+        // give user some tokens, contribute
+        targetToken.mint(user, amount);
+        vm.prank(user);
+        targetToken.approve(address(testContract), amount);
+        testContract.contribute(user, amount);
+        assertEq(targetToken.balanceOf(user), 0);
+        assertEq(testContract.contributedOf(user), amount);
+
+        // populate rewards
+        vm.startPrank(owner);
+        address[] memory rewardsAddresses = new address[](5);
+        for (uint256 index = 0; index < 5; index++) {
+            TestToken token = new TestToken();
+            token.mint(owner, index);
+            token.approve(address(testContract), index);
+            testContract.addReward(owner, address(token), index);
+            rewardsAddresses[index] = address(token);
+        }
+        vm.stopPrank();
+
+        // warp to completion
+        vm.warp(expiry + 1);
+
+        vm.startPrank(user);
+        vm.expectRevert(bytes("not complete"));
+        testContract.claimReward(user, rewardsAddresses);
         vm.stopPrank();
     }
 
     function test_SplitComplete_RefundContribution_Reverts() public {
-        // fuzz filter
         address user = address(1337);
         uint256 amount = 100;
 
@@ -145,6 +178,40 @@ contract DaoSplitTest is DSTest {
         vm.expectRevert(bytes("no refunds"));
         testContract.refundContribution(user);
 
+        vm.stopPrank();
+    }
+
+    function test_SplitComplete_RefundRewards_Reverts() public {
+        // fuzz filter
+        address user = address(1337);
+        uint256 amount = 100;
+
+        // populate minimum to ensure completion
+        contributeMinimum(owner, targetToken, testContract, minContribution);
+
+        // transfer token allocation to user
+        targetToken.mint(user, amount);
+
+        // user contributes to daosplit
+        vm.startPrank(user);
+        targetToken.approve(address(testContract), amount);
+        testContract.contribute(user, amount);
+        assertEq(targetToken.balanceOf(user), 0);
+        assertEq(testContract.contributedOf(user), amount);
+        vm.stopPrank();
+
+        // populate rewards
+        ContributedReward[] memory rewards = new ContributedReward[](5);
+        populateRewardsRange(testContract, owner, rewards);
+
+        // warp to complete split
+        vm.warp(expiry + 1);
+
+        // attempt to refund
+        for (uint256 index = 0; index < rewards.length; index++) {
+            vm.expectRevert(bytes("no refunds"));
+            testContract.refundReward(owner, rewards[index].token);
+        }
         vm.stopPrank();
     }
 
@@ -309,6 +376,27 @@ contract DaoSplitTest is DSTest {
         vm.startPrank(user);
         vm.expectRevert(bytes("no rewards for token"));
         testContract.claimReward(user, rewardsAddresses);
+        vm.stopPrank();
+    }
+
+    struct ContributedReward {
+        address token;
+        uint256 amount;
+    }
+
+    function populateRewardsRange(
+        DaoSplit split,
+        address user,
+        ContributedReward[] memory rewards
+    ) private {
+        vm.startPrank(user);
+        for (uint256 index = 0; index < rewards.length; index++) {
+            TestToken token = new TestToken();
+            token.mint(owner, 200);
+            token.approve(address(testContract), 200);
+            split.addReward(owner, address(token), 200);
+            rewards[index] = (ContributedReward(address(token), 200));
+        }
         vm.stopPrank();
     }
 

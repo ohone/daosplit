@@ -29,18 +29,32 @@ contract DaoSplit {
 
     function refundReward(address recipient, address reward) external {
         require(isRefund(), "no refunds");
-        address id = address(
-            bytes20(keccak256(abi.encodePacked(recipient, reward)))
-        );
+
+        address id = getRewardAddress(recipient, reward);
         uint256 contribution = rewardsContributions[id];
         rewardsContributions[id] = 0;
+
         IERC20(reward).transfer(recipient, contribution);
+    }
+
+    function addReward(
+        address from,
+        address tokenAddress,
+        uint256 amount
+    ) external {
+        require(isActive(), "not active");
+
+        rewardsContributions[getRewardAddress(from, tokenAddress)] += amount;
+        rewards[tokenAddress] += amount;
+
+        IERC20(tokenAddress).transferFrom(from, address(this), amount);
     }
 
     function claimReward(address recipient, address[] calldata requestedRewards)
         external
     {
-        require(isComplete(), "isnt complete");
+        require(isComplete(), "not complete");
+
         uint256 contribution = contributions[recipient];
         require(contribution > 0, "no contributions to claim");
         contributions[recipient] = 0;
@@ -59,20 +73,10 @@ contract DaoSplit {
     }
 
     function contribute(address from, uint256 amount) external {
-        require(isActive(), "isnt active");
+        require(isActive(), "not active");
         IERC20(targetToken).transferFrom(from, address(this), amount);
         contributions[from] += amount;
         contributed += amount;
-    }
-
-    function addReward(
-        address from,
-        address tokenAddress,
-        uint256 amount
-    ) external {
-        require(isActive(), "isnt active");
-        IERC20(tokenAddress).transferFrom(from, address(this), amount);
-        rewards[tokenAddress] += amount;
     }
 
     function rewardAmount(uint256 contribution, address token)
@@ -101,5 +105,14 @@ contract DaoSplit {
         returns (uint256)
     {
         return contributions[contributor];
+    }
+
+    function getRewardAddress(address contributor, address token)
+        private
+        pure
+        returns (address)
+    {
+        return
+            address(bytes20(keccak256(abi.encodePacked(contributor, token))));
     }
 }
