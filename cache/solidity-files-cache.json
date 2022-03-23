@@ -74,8 +74,8 @@
       ]
     },
     "/Users/eoghan/source/daosplit/src/test/DaoSplit.t.sol": {
-      "lastModificationDate": 1648065452265,
-      "contentHash": "d44034694a142d3cc0141071ad58a02b",
+      "lastModificationDate": 1648067582274,
+      "contentHash": "36cbc55c5cf63c32da379682aef0421c",
       "sourceName": "src/test/DaoSplit.t.sol",
       "solcConfig": {
         "settings": {

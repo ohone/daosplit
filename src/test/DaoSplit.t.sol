@@ -24,7 +24,7 @@ contract DaoSplitTest is DSTest {
         owner = address(this);
     }
 
-    function test_SplitActive_CanContributeTargetToken() public {
+    function test_SplitActive_ContributeTargetToken() public {
         address user = address(1);
         uint256 amount = 1337;
 
@@ -42,7 +42,7 @@ contract DaoSplitTest is DSTest {
         assertEq(testContract.contributedOf(user), amount);
     }
 
-    function test_SplitActive_CanContributeReward() public {
+    function test_SplitActive_ContributeReward() public {
         vm.startPrank(owner);
         TestToken newToken = new TestToken();
         uint256 newTokenAmount = uint256(200);
@@ -55,7 +55,7 @@ contract DaoSplitTest is DSTest {
         vm.stopPrank();
     }
 
-    function test_ContributeNonTargetToken_reverts() public {
+    function test_SplitActive_ContributeNonTargetToken_reverts() public {
         address user = address(1);
         uint256 amount = 1337;
 
@@ -70,7 +70,7 @@ contract DaoSplitTest is DSTest {
         testContract.contribute(user, amount);
     }
 
-    function test_SplitExpires_RefundContribution() public {
+    function test_SplitExpired_RefundContribution() public {
         address user = address(1);
         uint256 amount = minContribution - 1;
         targetToken.mint(user, amount);
@@ -89,7 +89,7 @@ contract DaoSplitTest is DSTest {
         assertEq(targetToken.balanceOf(user), amount);
     }
 
-    function test_SplitExpires_RefundRewards() public {
+    function test_SplitExpired_RefundRewards() public {
         address user = address(1);
         uint256 amount = uint256(1);
 
@@ -117,11 +117,9 @@ contract DaoSplitTest is DSTest {
                 rewards[index].amount
             );
         }
-
-        vm.stopPrank();
     }
 
-    function test_SplitExpires_ClaimRewards_Reverts() public {
+    function test_SplitExpired_ClaimRewards_Reverts() public {
         address user = address(1);
         uint256 amount = 1;
 
@@ -151,6 +149,30 @@ contract DaoSplitTest is DSTest {
         vm.startPrank(user);
         vm.expectRevert(bytes("not complete"));
         testContract.claimReward(user, rewardsAddresses);
+        vm.stopPrank();
+    }
+
+    function test_SplitExpired_ContributeToken_Reverts() public {
+        address user = address(1);
+        uint256 amount = 1;
+
+        // give user some tokens, contribute
+        targetToken.mint(user, amount);
+        vm.prank(user);
+        targetToken.approve(address(testContract), amount);
+        testContract.contribute(user, amount);
+        assertEq(targetToken.balanceOf(user), 0);
+        assertEq(testContract.contributedOf(user), amount);
+
+        // populate rewards
+        populateRewardsRange(testContract, owner, new ContributedReward[](5));
+
+        // warp to completion
+        vm.warp(expiry + 1);
+
+        vm.startPrank(user);
+        vm.expectRevert(bytes("not active"));
+        testContract.contribute(user, 1);
         vm.stopPrank();
     }
 
