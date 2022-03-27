@@ -32,6 +32,7 @@ contract DaoSplit {
 
         address id = getRewardAddress(recipient, reward);
         uint256 contribution = rewardsContributions[id];
+        require(contribution > 0, "not contributed");
         rewardsContributions[id] = 0;
 
         IERC20(reward).transfer(recipient, contribution);
@@ -46,7 +47,6 @@ contract DaoSplit {
 
         rewardsContributions[getRewardAddress(from, tokenAddress)] += amount;
         rewards[tokenAddress] += amount;
-
         IERC20(tokenAddress).transferFrom(from, address(this), amount);
     }
 

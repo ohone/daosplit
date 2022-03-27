@@ -1,162 +1,14 @@
 {
-  "_format": "ethers-rs-sol-cache-1",
+  "_format": "ethers-rs-sol-cache-2",
   "files": {
-    "/Users/eoghan/source/daosplit/src/DaoSplit.sol": {
-      "lastModificationDate": 1648063344498,
-      "contentHash": "fe33f940bf5eae3a2541ce8082631d6c",
-      "sourceName": "src/DaoSplit.sol",
+    "/Users/eoghan/source/daosplit/lib/ds-test/src/test.sol": {
+      "lastModificationDate": 1646564094311,
+      "contentHash": "5d45a46528eaf8a26f0a8d93669f3148",
+      "sourceName": "lib/ds-test/src/test.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ]
-            }
-          },
-          "evmVersion": "london"
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
-      ],
-      "versionPragmas": [
-        "0.8.12"
-      ],
-      "artifacts": [
-        "DaoSplit"
-      ]
-    },
-    "/Users/eoghan/source/daosplit/src/DaoSplitFactory.sol": {
-      "lastModificationDate": 1647727687657,
-      "contentHash": "c827189920cf8ef346be4b817d6ef85d",
-      "sourceName": "src/DaoSplitFactory.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ]
-            }
-          },
-          "evmVersion": "london"
-        }
-      },
-      "imports": [
-        "./DaoSplit.sol"
-      ],
-      "versionPragmas": [
-        "0.8.12"
-      ],
-      "artifacts": [
-        "DaoSplitFactory"
-      ]
-    },
-    "/Users/eoghan/source/daosplit/src/test/DaoSplit.t.sol": {
-      "lastModificationDate": 1648067582274,
-      "contentHash": "36cbc55c5cf63c32da379682aef0421c",
-      "sourceName": "src/test/DaoSplit.t.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ]
-            }
-          },
-          "evmVersion": "london"
-        }
-      },
-      "imports": [
-        "ds-test/test.sol",
-        "../DaoSplit.sol",
-        "./Hevm.sol",
-        "./TestToken.sol"
-      ],
-      "versionPragmas": [
-        "0.8.12"
-      ],
-      "artifacts": [
-        "DaoSplitTest"
-      ]
-    },
-    "/Users/eoghan/source/daosplit/src/test/DaoSplitFactory.t.sol": {
-      "lastModificationDate": 1647771814326,
-      "contentHash": "cc36e4c4b1607dfe3cab4c3c24e592f8",
-      "sourceName": "src/test/DaoSplitFactory.t.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ]
-            }
-          },
-          "evmVersion": "london"
-        }
-      },
-      "imports": [
-        "ds-test/test.sol",
-        "../DaoSplitFactory.sol"
-      ],
-      "versionPragmas": [
-        "0.8.12"
-      ],
-      "artifacts": [
-        "DaoSplitFactoryTest"
-      ]
-    },
-    "/Users/eoghan/source/daosplit/src/test/Hevm.sol": {
-      "lastModificationDate": 1646587413977,
-      "contentHash": "02cc384521164257839043617efda6de",
-      "sourceName": "src/test/Hevm.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -176,21 +28,21 @@
         }
       },
       "imports": [],
-      "versionPragmas": [
-        "0.8.12"
-      ],
-      "artifacts": [
-        "Hevm"
-      ]
+      "versionRequirement": ">=0.4.23",
+      "artifacts": {
+        "DSTest": {
+          "0.8.12+commit.f00d7308.Darwin.appleclang": "test.sol/DSTest.json"
+        }
+      }
     },
-    "/Users/eoghan/source/daosplit/src/test/TestToken.sol": {
-      "lastModificationDate": 1647759476816,
-      "contentHash": "6fdc065cdf3acc020eaff293cb37b31d",
-      "sourceName": "src/test/TestToken.sol",
+    "/Users/eoghan/source/daosplit/lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol": {
+      "lastModificationDate": 1646564512581,
+      "contentHash": "cfaa86ed9df3a86f57ca96690deea3b7",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -210,14 +62,348 @@
         }
       },
       "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol"
       ],
-      "versionPragmas": [
-        "0.8.12"
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "ERC20": {
+          "0.8.12+commit.f00d7308.Darwin.appleclang": "ERC20.sol/ERC20.json"
+        }
+      }
+    },
+    "/Users/eoghan/source/daosplit/lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol": {
+      "lastModificationDate": 1646564512581,
+      "contentHash": "a44d1a099633876550ad2476b21bafbe",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IERC20": {
+          "0.8.12+commit.f00d7308.Darwin.appleclang": "IERC20.sol/IERC20.json"
+        }
+      }
+    },
+    "/Users/eoghan/source/daosplit/lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+      "lastModificationDate": 1646564512582,
+      "contentHash": "909ab67fc5c25033fe6cd364f8c056f9",
+      "sourceName": "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol"
       ],
-      "artifacts": [
-        "TestToken"
-      ]
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "IERC20Metadata": {
+          "0.8.12+commit.f00d7308.Darwin.appleclang": "IERC20Metadata.sol/IERC20Metadata.json"
+        }
+      }
+    },
+    "/Users/eoghan/source/daosplit/lib/openzeppelin-contracts/contracts/utils/Context.sol": {
+      "lastModificationDate": 1646564512585,
+      "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
+      "sourceName": "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.0",
+      "artifacts": {
+        "Context": {
+          "0.8.12+commit.f00d7308.Darwin.appleclang": "Context.sol/Context.json"
+        }
+      }
+    },
+    "/Users/eoghan/source/daosplit/src/DaoSplit.sol": {
+      "lastModificationDate": 1648239552229,
+      "contentHash": "8fafb9adfe41ede458810b3afaae0903",
+      "sourceName": "src/DaoSplit.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol"
+      ],
+      "versionRequirement": "=0.8.12",
+      "artifacts": {
+        "DaoSplit": {
+          "0.8.12+commit.f00d7308.Darwin.appleclang": "DaoSplit.sol/DaoSplit.json"
+        }
+      }
+    },
+    "/Users/eoghan/source/daosplit/src/DaoSplitFactory.sol": {
+      "lastModificationDate": 1647727687657,
+      "contentHash": "c827189920cf8ef346be4b817d6ef85d",
+      "sourceName": "src/DaoSplitFactory.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "src/DaoSplit.sol"
+      ],
+      "versionRequirement": "=0.8.12",
+      "artifacts": {
+        "DaoSplitFactory": {
+          "0.8.12+commit.f00d7308.Darwin.appleclang": "DaoSplitFactory.sol/DaoSplitFactory.json"
+        }
+      }
+    },
+    "/Users/eoghan/source/daosplit/src/test/DaoSplit.t.sol": {
+      "lastModificationDate": 1648398989243,
+      "contentHash": "b97b577cd900faf4aec39d0c50303232",
+      "sourceName": "src/test/DaoSplit.t.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [
+        "lib/ds-test/src/test.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol",
+        "src/DaoSplit.sol",
+        "src/test/Hevm.sol",
+        "src/test/TestToken.sol"
+      ],
+      "versionRequirement": "=0.8.12",
+      "artifacts": {
+        "DaoSplitTest": {
+          "0.8.12+commit.f00d7308.Darwin.appleclang": "DaoSplit.t.sol/DaoSplitTest.json"
+        }
+      }
+    },
+    "/Users/eoghan/source/daosplit/src/test/DaoSplitFactory.t.sol": {
+      "lastModificationDate": 1647771814326,
+      "contentHash": "cc36e4c4b1607dfe3cab4c3c24e592f8",
+      "sourceName": "src/test/DaoSplitFactory.t.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [
+        "lib/ds-test/src/test.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "src/DaoSplit.sol",
+        "src/DaoSplitFactory.sol"
+      ],
+      "versionRequirement": "=0.8.12",
+      "artifacts": {
+        "DaoSplitFactoryTest": {
+          "0.8.12+commit.f00d7308.Darwin.appleclang": "DaoSplitFactory.t.sol/DaoSplitFactoryTest.json"
+        }
+      }
+    },
+    "/Users/eoghan/source/daosplit/src/test/Hevm.sol": {
+      "lastModificationDate": 1646587413977,
+      "contentHash": "02cc384521164257839043617efda6de",
+      "sourceName": "src/test/Hevm.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [],
+      "versionRequirement": "=0.8.12",
+      "artifacts": {
+        "Hevm": {
+          "0.8.12+commit.f00d7308.Darwin.appleclang": "Hevm.sol/Hevm.json"
+        }
+      }
+    },
+    "/Users/eoghan/source/daosplit/src/test/TestToken.sol": {
+      "lastModificationDate": 1647759476816,
+      "contentHash": "6fdc065cdf3acc020eaff293cb37b31d",
+      "sourceName": "src/test/TestToken.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ]
+            }
+          },
+          "evmVersion": "london"
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol",
+        "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Context.sol"
+      ],
+      "versionRequirement": "=0.8.12",
+      "artifacts": {
+        "TestToken": {
+          "0.8.12+commit.f00d7308.Darwin.appleclang": "TestToken.sol/TestToken.json"
+        }
+      }
     }
   }
 }

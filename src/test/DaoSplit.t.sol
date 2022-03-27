@@ -52,7 +52,24 @@ contract DaoSplitTest is DSTest {
         testContract.addReward(owner, address(newToken), newTokenAmount);
 
         assertEq(newToken.balanceOf(address(testContract)), newTokenAmount);
+    }
+
+    function test_SplitActive_RefundReward_Reverts(bool contributed) public {
+        vm.startPrank(owner);
+        TestToken newToken = new TestToken();
+        if (contributed) {
+            uint256 newTokenAmount = uint256(200);
+            newToken.mint(owner, newTokenAmount);
+            newToken.approve(address(testContract), newTokenAmount);
+            testContract.addReward(owner, address(newToken), newTokenAmount);
+            vm.stopPrank();
+            assertEq(newToken.balanceOf(address(testContract)), newTokenAmount);
+        }
+
         vm.stopPrank();
+        vm.expectRevert(bytes("no refunds"));
+
+        testContract.refundReward(owner, address(newToken));
     }
 
     function test_SplitActive_ContributeNonTargetToken_reverts() public {
@@ -68,6 +85,7 @@ contract DaoSplitTest is DSTest {
 
         vm.expectRevert(bytes("ERC20: insufficient allowance"));
         testContract.contribute(user, amount);
+        vm.stopPrank();
     }
 
     function test_SplitExpired_RefundContribution() public {
@@ -234,7 +252,6 @@ contract DaoSplitTest is DSTest {
             vm.expectRevert(bytes("no refunds"));
             testContract.refundReward(owner, rewards[index].token);
         }
-        vm.stopPrank();
     }
 
     function test_SplitComplete_ClaimsRewards() public {
